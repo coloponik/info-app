@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
+from calculator import views as Calc
 
 urlpatterns = [
-    path('', views.index),
-    path('weather/', views.weather),
+    path('weather/', views.weather)
 ]
