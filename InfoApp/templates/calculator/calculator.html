@@ -1,71 +1,50 @@
-<!DOCTYPE html>
+{% extends "index.html" %}
 {% load static %}
-<html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>InfoApp</title>
-        <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-        <script type="text/javascript" src="{% static 'scripts/node_modules/jquery/dist/jquery.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'scripts/calculate.js' %}"></script>
-    </head>
-    <body>
-      <div class="content">
-        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-            <h5 class="my-0 mr-md-auto font-weight-normal">InfoApp</h5>
-            <nav class="my-2 my-md-0 mr-md-3">
-              <a class="p-2 text-dark" href="http://localhost:8000">Главная</a>
-              <a class="p-2 text-dark" href="http://localhost:8000/weather/">Погода</a>
-              <a class="p-2 text-dark" href="">Кредитный калькулятор</a>
-            </nav>
-            <a class="btn btn-outline-primary" href="#">Something</a>
-          </div>
-          <div class="container">
-              <div class="row block-alignment">
-                <h1>РАСЧЁТ АННУИТЕТНОГО ПЛАТЕЖА</h1>
-              </div>
-              <hr>
-              <br>
-              <div class="row">
-                <div class="col-3">
-                  <label for="creditAmount">Сумма кредита:</label>
-                  <input type="text" class="form-control" id="creditAmount">
-                </div>
-                <div class="col-3">
-                  <label for="creditRate">Процентная ставка:</label>
-                  <input type="text" class="form-control" id="creditRate">
-                </div>
-                <div class="col-3">
-                  <div id="termMonths">
-                    <label for="creditPeriod">Срок кредита (в месяцах):</label>
-                  </div>
-                  <div id="termDays" class="active">
-                    <label for="creditPeriod">Срок кредита (в днях):</label>
-                  </div>
-                  <input type="text" class="form-control" id="creditPeriod">
-                </div>
-                <div id="hide" class="col-3 active" name="step">
-                  <label for="paymentStep">Шаг платежа (в днях):</label>
-                  <input type="text" class="form-control" id="paymentStep">
-                </div>
-                <div class="col-3">
-                  <div class="rad">
-                    <input class="form-check-input" type="radio" name="rate" id="rateYear" value="false">
-                    <span>в год &emsp;</span>
-                    <input class="form-check-input" type="radio" name="rate" id="rateDay" value="false">
-                    <span>в день</span><br/>
-                  </div>
-                  <input type="submit" name="send" value="Рассчитать" class="btn btn-info btn-size">
-                </div>
-              </div>
-          </div>
+{% block scripts %}
+<script type="text/javascript" src="{% static 'scripts/node_modules/jquery/dist/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/calculate.js' %}"></script>
+{% endblock scripts %}
+{% block content %}
+<div class="container">
+  <div class="row block-alignment">
+    <h1>РАСЧЁТ АННУИТЕТНОГО ПЛАТЕЖА</h1>
+  </div>
+  <hr>
+  <br>
+  <form action="" method="post">
+    {% csrf_token %}
+    <div class="form-group row">
+      <div class="col-3">
+        <label for="creditAmount">Сумма кредита:</label>
+        {{ form.creditAmount }}
+      </div>
+      <div class="col-3">
+        <label for="creditRate">Процентная ставка:</label>
+        {{ form.creditRate }}
+      </div>
+      <div class="col-3">
+        <div id="termMonths">
+          <label for="creditPeriod">Срок кредита (в месяцах):</label>
         </div>
-        <footer class="footer mt-auto py-3 align-footer">
-          <div class="container">
-            <span class="text-color">&copy; 2020 - coloponik@gmail.com</span>
-          </div>
-        </footer>
-    </body>
-</html>
+        <div id="termDays" class="active">
+          <label for="creditPeriod">Срок кредита (в днях):</label>
+        </div>
+        {{ form.creditPeriod }}
+      </div>
+      <div id="hide" class="col-3 active" name="step">
+        <label for="paymentStep">Шаг платежа (в днях):</label>
+        {{ form.paymentStep }}
+      </div>
+      <div class="col-3">
+        <div class="rad">
+          <input class="form-check-input" type="radio" name="rate" id="rateYear" value="false">
+          <span>в год &emsp;</span>
+          <input class="form-check-input" type="radio" name="rate" id="rateDay" value="false">
+          <span>в день</span><br />
+        </div>
+        <input type="submit" name="send" value="Рассчитать" class="btn btn-info btn-size">
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock content%}

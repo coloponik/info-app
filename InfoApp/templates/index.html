@@ -8,6 +8,7 @@
         <title>InfoApp</title>
         <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        {% block scripts %}{% endblock scripts %}
     </head>
     <body>
       <div class="content">
@@ -20,6 +21,7 @@
           </nav>
           <a class="btn btn-outline-primary" href="#">Something</a>
         </div>
+        {% block content %}{% endblock content%}
       </div>
       <footer class="footer mt-auto py-3 align-footer">
         <div class="container">
