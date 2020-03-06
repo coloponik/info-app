@@ -3,8 +3,8 @@ from django.shortcuts import render
 from .models import City
 from .forms import CityForm
 
-def index(request):
-    return render(request, 'index.html')
+# def index(request):
+#     return render(request, 'index.html')
     
 def weather(request):
 
@@ -17,8 +17,8 @@ def weather(request):
     cities = City.objects.all()
     
     if cities:
-        # appid = "f65749c1cb61cf824f936ed96ffd763b"
-        appid = "02f77820f95bde53f1fad1edae3d923d"
+        appid = "f65749c1cb61cf824f936ed96ffd763b"
+        # appid = "02f77820f95bde53f1fad1edae3d923d"
         all_cities = []
         for city in cities:
             res = requests.get("http://api.openweathermap.org/data/2.5/weather",

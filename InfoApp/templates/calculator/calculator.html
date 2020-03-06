@@ -3,6 +3,7 @@
 {% block scripts %}
 <script type="text/javascript" src="{% static 'scripts/node_modules/jquery/dist/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'scripts/calculate.js' %}"></script>
+<script type="text/javascript" src="{% static '../../node_modules/dist/calculate.js' %}"></script>
 {% endblock scripts %}
 {% block content %}
 <div class="container">
@@ -11,16 +12,30 @@
   </div>
   <hr>
   <br>
-  <form action="" method="post">
+  <form id="credit" action="" method="post">
     {% csrf_token %}
     <div class="form-group row">
       <div class="col-3">
         <label for="creditAmount">Сумма кредита:</label>
         {{ form.creditAmount }}
+        <div class="alert alert-warning err active">
+        </div>
+        {% if form.creditAmount.errors %}
+        <div class="alert alert-danger err">
+          {{form.creditAmount.errors}}
+        </div>
+        {% endif %}
       </div>
       <div class="col-3">
         <label for="creditRate">Процентная ставка:</label>
         {{ form.creditRate }}
+        <div class="alert alert-warning err active">
+        </div>
+        {% if form.creditRate.errors %}
+        <div class="alert alert-danger err">
+          {{form.creditRate.errors}}
+        </div>
+        {% endif %}
       </div>
       <div class="col-3">
         <div id="termMonths">
@@ -30,21 +45,78 @@
           <label for="creditPeriod">Срок кредита (в днях):</label>
         </div>
         {{ form.creditPeriod }}
+        <div class="alert alert-warning err active">
+        </div>
+        {% if form.creditPeriod.errors %}
+        <div class="alert alert-danger err">
+          {{form.creditPeriod.errors}}
+        </div>
+        {% endif %}
       </div>
       <div id="hide" class="col-3 active" name="step">
         <label for="paymentStep">Шаг платежа (в днях):</label>
         {{ form.paymentStep }}
+        <div class="alert alert-warning err active">
+        </div>
+        {% if form.paymentStep.errors %}
+        <div class="alert alert-danger err">
+          {{form.paymentStep.errors}}
+        </div>
+        {% endif %}
       </div>
       <div class="col-3">
         <div class="rad">
-          <input class="form-check-input" type="radio" name="rate" id="rateYear" value="false">
-          <span>в год &emsp;</span>
-          <input class="form-check-input" type="radio" name="rate" id="rateDay" value="false">
-          <span>в день</span><br />
+          {% for radio in form.radio %}
+          {{ radio }}
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          {% endfor %}
         </div>
-        <input type="submit" name="send" value="Рассчитать" class="btn btn-info btn-size">
+        <input id="btn" type="submit" name="send" value="Рассчитать" class="btn btn-info btn-size">
       </div>
     </div>
   </form>
+
+  <div id="result" class="">
+    <pre class="pre-scrollable">
+                <div id="tab">
+                 <table id="rez" class="table w-60">
+                      <thead class="thead-light">
+                          <tr>
+                              <th scope="col">№<br>платежа</th>
+                              <th scope="col">Дата<br>платежа</th>
+                              <th scope="col">Размер платежа<br>по телу, руб.</th>
+                              <th scope="col">Размер платежа<br>по %, руб.</th>
+                              <th scope="col">Остаток основного<br>долга, руб.</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for payment in payments %}
+                               <tr>
+                                <th scope="row">{{payment.Id}}</th>
+                                <td>{{payment.Date}}</td>
+                                <td>{{payment.Body}}</td>
+                                <td>{{payment.Percent}}</td>
+                                <td>{{payment.MainBalance}}</td>
+                               </tr>
+                          {% endfor %}
+                           <table class="table w-60">
+                               <tbody class="thead-light">
+                                   <tr>
+                                       <th scope="col">Сумма периодического платежа, руб.:</th>
+                                       <th scope="col">{{ payPer }}</th>
+                                       <th>                                                    </th>
+                                   </tr>
+                                   <tr>
+                                       <th scope="col">Итого переплата по кредиту, руб.:</th>
+                                       <th scope="col">{{ totalOverpay }}</th>
+                                       <th>                                                    </th>
+                                   </tr>
+                               </tbody>
+                           </table>
+                      </tbody>
+                 </table>
+               </div>
+        </pre>
+  </div>
 </div>
 {% endblock content%}
