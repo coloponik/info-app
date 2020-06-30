@@ -7,10 +7,7 @@ from .annotations.NotValidStep import notValidStep
 import re
 
 class CalcForm(forms.Form):
-    creditAmount = forms.FloatField(error_messages=
-        {
-            'required':'Este campo es requerido'
-        },
+    creditAmount = forms.FloatField(
         validators=[notValidSum],
         min_value=20000.00,
         max_value=3000000.00,

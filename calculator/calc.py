@@ -1,3 +1,4 @@
+from dateutil.relativedelta import relativedelta
 from datetime import datetime, timedelta
 
 def initialization(creditAmount, creditRate, paymentStep, period, payPerPeriod, total, type):
@@ -15,7 +16,7 @@ def initialization(creditAmount, creditRate, paymentStep, period, payPerPeriod, 
             #-----------------------------------------------
             resPay[i]["Id"] = i + 1
             if type:
-                resPay[i]["Date"] = (today + timedelta(i)).strftime("%d/%m/%y")
+                resPay[i]["Date"] = (today + relativedelta(months=+i)).strftime("%d/%m/%y")
             if not type:
                 resPay[i]["Date"] = (today + timedelta(paymentStep * i)).strftime("%d/%m/%y")
             resPay[i]["Body"] = round(payPerPeriod - percent, 2)

@@ -1,0 +1,64 @@
+{% extends "account/base.html" %}
+
+{% load account_tags %}
+
+{% block tabs %}
+<li class="nav-item block-alignment">
+    <a id="reg" class="nav-link" href="{% url 'account_signup' %}">Регистрация</a>
+</li>
+<li class="nav-item">
+    <a id="auth" class="nav-link active" href="{% url 'account_login' %}">Вход</a>
+</li>
+{% endblock tabs%}
+
+{% block primary %}
+
+  {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Your account doesn't have access to this page. To proceed,
+      please login with an account that has access.</p>
+    {% else %}
+      <p>Please login to see this page.</p>
+    {% endif %}
+  {% endif %}
+
+  <div class="blockin-join">
+    <form method="post" action="{% url 'account_login' %}">
+      {% csrf_token %}
+      <table>
+        <tr  class="block-alignment">
+          <td>
+            <label for="email">Email: </label>
+          </td>
+          <td>
+            {{ form.email }}
+          </td>
+        </tr>
+        <tr  class="block-alignment">
+          <td>
+            <label for="password">Пароль: </label>
+          </td>
+          <td>
+            {{ form.password }}
+          </td>
+        </tr>
+        <tr class="block-alignment">
+          <td>
+            <br>
+            <input class="btn btn-outline-primary" type="submit" value="Авторизоваться" />
+          </td>
+          <!-- <td><input type="hidden" name="next" value="{{ next }}" /></td> -->
+        </tr>
+        <tr class="block-alignment">
+          <td>
+            <a href="{% url 'account_password_reset' %}">Забыли пароль?</a>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+{% endblock primary%}

@@ -1,0 +1,20 @@
+{% extends "account/base.html" %}
+{% load static %}
+{% load account_tags %}
+{% block tabs %}
+<li class="nav-item">
+    <a id="reg" class="nav-link active" href="{% url 'account_signup' %}">Регистрация</a>
+</li>
+<li class="nav-item">
+    <a id="auth" class="nav-link" href="{% url 'account_login' %}">Вход</a>
+</li>
+{% endblock tabs %}
+{% block primary %}
+<div class="blockin-join">
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Регистрация</button>
+    </form>
+</div>
+{% endblock primary %}

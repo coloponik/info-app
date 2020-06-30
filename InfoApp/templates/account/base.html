@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block scripts %}
+<script type="text/javascript" src="{% static 'scripts/node_modules/jquery/dist/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'scripts/join.js' %}"></script>
+{% endblock scripts %}
+{% block content %}
+<div class="block-alignment">
+  <div class="block-join">
+    <ul class="nav nav-tabs block-alignment">
+      {% block tabs %}{% endblock tabs %}
+    </ul>
+    <div class="block-auth block-alignment">
+      {% block primary %}{% endblock primary %}
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% extends 'account/base.html' %}
+{% block primary %}
+<table>
+    <tr class="block-alignment">
+        <td>
+            <h1>До новых встреч!</h1>
+        </td>
+    </tr>
+    <tr class="block-alignment">
+        <td>
+            <br>
+            <a href="{% url 'account_login' %}">Войти.</a>
+        </td>
+    </tr>
+</table>
+{% endblock primary %}

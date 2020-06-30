@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+{% load account_tags %}
+{% block content %}
+<div class="block-alignment">
+  <table>
+    <tr class="block-account block-alignment">
+      <td>
+        <div id="list-example" class="list-group">
+          <a class="list-group-item list-group-item-action" href="http://localhost:8000/account/profile/">Профиль</a>
+          <a class="list-group-item list-group-item-action" href="http://localhost:8000/account/profile/notes/">Заметки</a>
+          <a class="list-group-item list-group-item-action" href="http://localhost:8000/account/profile/settings/">Настройки</a>
+        </div>
+      </td>
+      <td> </td>
+      <td>
+        {% block info_profile %}{% endblock info_profile %}
+      </td>
+    </tr>
+  </table>
+</div>
+{% endblock content%}
